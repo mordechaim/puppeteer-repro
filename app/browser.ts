@@ -49,6 +49,7 @@ export const screenshot = async (html: string) => {
 
   if (!process.env.CHROMIUM_LOCAL) {
     const entries = await fs.readdir('/tmp', { withFileTypes: true });
+    console.log(entries);
 
     for (const entry of entries) {
       const fullPath = path.join('/tmp', entry.name);
