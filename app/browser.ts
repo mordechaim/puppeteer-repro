@@ -7,7 +7,6 @@ import path from 'path';
 
 const launch = async () => {
   return await puppeteer.launch({
-    pipe: true,
     dumpio: true,
     args: [
       ...chromium.args,
