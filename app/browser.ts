@@ -54,19 +54,19 @@ export const screenshot = async (html: string) => {
       const entries = await fs.readdir('/tmp', { withFileTypes: true });
       console.log(entries);
 
-      for (const entry of entries) {
-        const fullPath = path.join('/tmp', entry.name);
+      //   for (const entry of entries) {
+      //     const fullPath = path.join('/tmp', entry.name);
 
-        if (entry.name === 'chromium') {
-          continue;
-        }
+      //     if (entry.name === 'chromium') {
+      //       continue;
+      //     }
 
-        if (entry.isDirectory()) {
-          await fs.rm(fullPath, { recursive: true, force: true });
-        } else {
-          await fs.unlink(fullPath);
-        }
-      }
+      //     if (entry.isDirectory()) {
+      //       await fs.rm(fullPath, { recursive: true, force: true });
+      //     } else {
+      //       await fs.unlink(fullPath);
+      //     }
+      //   }
     }
   }
 };
