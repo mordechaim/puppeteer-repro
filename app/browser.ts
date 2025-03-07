@@ -40,31 +40,33 @@ export const screenshot = async (html: string) => {
     waitUntil: ['load'],
   });
 
-  const bytes = await tab.screenshot({
-    type: 'png',
-    fullPage: true,
-    omitBackground: true,
-  });
-  await browser.close();
+  try {
+    const bytes = await tab.screenshot({
+      type: 'png',
+      fullPage: true,
+      omitBackground: true,
+    });
+    return Buffer.from(bytes).toString('base64');
+  } finally {
+    await browser.close();
 
-  if (!process.env.CHROMIUM_LOCAL) {
-    const entries = await fs.readdir('/tmp', { withFileTypes: true });
-    console.log(entries);
+    if (!process.env.CHROMIUM_LOCAL) {
+      const entries = await fs.readdir('/tmp', { withFileTypes: true });
+      console.log(entries);
 
-    for (const entry of entries) {
-      const fullPath = path.join('/tmp', entry.name);
+      for (const entry of entries) {
+        const fullPath = path.join('/tmp', entry.name);
 
-      if (entry.name === 'chromium') {
-        continue;
-      }
+        if (entry.name === 'chromium') {
+          continue;
+        }
 
-      if (entry.isDirectory()) {
-        await fs.rm(fullPath, { recursive: true, force: true });
-      } else {
-        await fs.unlink(fullPath);
+        if (entry.isDirectory()) {
+          await fs.rm(fullPath, { recursive: true, force: true });
+        } else {
+          await fs.unlink(fullPath);
+        }
       }
     }
   }
-
-  return Buffer.from(bytes).toString('base64');
 };
