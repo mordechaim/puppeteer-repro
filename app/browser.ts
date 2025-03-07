@@ -17,7 +17,7 @@ const launch = async () => {
     executablePath: process.env.CHROMIUM_LOCAL
       ? puppeteer.executablePath('chrome')
       : await chromium.executablePath(
-          'https://github.com/Sparticuz/chromium/releases/download/v132.0.0/chromium-v132.0.0-pack.tar'
+          'https://github.com/Sparticuz/chromium/releases/download/v133.0.0/chromium-v133.0.0-pack.tar'
         ),
   });
 };
