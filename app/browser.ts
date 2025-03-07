@@ -35,7 +35,7 @@ export const screenshot = async (html: string) => {
     fullPage: true,
     omitBackground: true,
   });
-  await browser.close();
+  browser.process()?.kill();
 
   return Buffer.from(bytes).toString('base64');
 };
