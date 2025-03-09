@@ -25,8 +25,8 @@ export const screenshot = async (html: string) => {
   });
 
   tab.setViewport({
-    width: 4950,
-    height: 7650,
+    width: Math.round(4950 / 4),
+    height: Math.round(7650 / 4),
   });
 
   try {
