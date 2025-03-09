@@ -24,6 +24,11 @@ export const screenshot = async (html: string) => {
     waitUntil: ['load'],
   });
 
+  tab.setViewport({
+    width: 4950,
+    height: 7650,
+  });
+
   try {
     const bytes = await tab.screenshot({
       type: 'png',
