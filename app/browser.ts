@@ -2,7 +2,6 @@
 
 import chromium from '@sparticuz/chromium-min';
 import puppeteer from 'puppeteer-core';
-import fs from 'node:fs/promises';
 
 const launch = async () => {
   return await puppeteer.launch({
@@ -19,15 +18,6 @@ const launch = async () => {
 
 export const screenshot = async (html: string) => {
   const browser = await launch();
-  let chromeTmpDataDir = null;
-
-  let chromeSpawnArgs = browser.process()!.spawnargs;
-  for (let i = 0; i < chromeSpawnArgs.length; i++) {
-    if (chromeSpawnArgs[i].indexOf('--user-data-dir=') === 0) {
-      chromeTmpDataDir = chromeSpawnArgs[i].replace('--user-data-dir=', '');
-    }
-  }
-
   const tab = await browser.newPage();
   await tab.setContent(html, {
     timeout: 0,
@@ -43,24 +33,5 @@ export const screenshot = async (html: string) => {
     return Buffer.from(bytes).toString('base64');
   } finally {
     await browser.close();
-
-    if (!process.env.CHROMIUM_LOCAL) {
-      const entries = await fs.readdir('/tmp', { withFileTypes: true });
-      console.log(entries);
-
-      //   for (const entry of entries) {
-      //     const fullPath = path.join('/tmp', entry.name);
-
-      //     if (entry.name === 'chromium') {
-      //       continue;
-      //     }
-
-      //     if (entry.isDirectory()) {
-      //       await fs.rm(fullPath, { recursive: true, force: true });
-      //     } else {
-      //       await fs.unlink(fullPath);
-      //     }
-      //   }
-    }
   }
 };
