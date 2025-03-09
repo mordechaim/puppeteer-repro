@@ -3,17 +3,11 @@
 import chromium from '@sparticuz/chromium-min';
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs/promises';
-import path from 'path';
 
 const launch = async () => {
   return await puppeteer.launch({
     dumpio: true,
-    args: [
-      ...chromium.args,
-      '--disable-setuid-sandbox',
-      '--no-sandbox',
-      '--no-zygote',
-    ],
+    args: chromium.args,
     defaultViewport: chromium.defaultViewport,
     executablePath: process.env.CHROMIUM_LOCAL
       ? puppeteer.executablePath('chrome')
