@@ -27,7 +27,6 @@ export const screenshot = async (html: string) => {
   try {
     const bytes = await tab.screenshot({
       type: 'png',
-      fullPage: true,
       omitBackground: true,
     });
     return Buffer.from(bytes).toString('base64');
